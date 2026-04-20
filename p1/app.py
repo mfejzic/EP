@@ -38,7 +38,7 @@ logger.addHandler(file_handler)
 app = Flask(__name__)
 
 # ----------------------------
-# 1. DATABASE CONFIG
+# 1. DATABASE CONFIGURATION
 # ----------------------------
 db_config = {
     "host": os.getenv("DB_HOST", "db"),
