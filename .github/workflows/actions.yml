@@ -4,22 +4,18 @@ on:
   push:
     branches: [ main ]
     paths:
-      - "p1/**"
+      - "EP/p1/**"
 
 jobs:
   build-test:
     runs-on: ubuntu-latest
-
-    defaults:
-      run:
-        working-directory: EP/p1
 
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
 
       - name: Build Docker image
-        run: docker build -t flask-app .
+        run: docker build -t flask-app EP/p1
 
       - name: Run container
         run: docker run -d -p 5000:5000 --name app flask-app
