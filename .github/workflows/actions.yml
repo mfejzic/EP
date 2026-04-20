@@ -1,0 +1,36 @@
+name: EP P1 CI/CD
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - "p1/**"
+
+jobs:
+  build-test:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: p1
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Build Docker image
+        run: docker build -t flask-app .
+
+      - name: Run container
+        run: docker run -d -p 5000:5000 --name app flask-app
+
+      - name: Wait for startup
+        run: sleep 5
+
+      - name: Test endpoint
+        run: curl --fail http://localhost:5000
+
+      - name: Stop container
+        run: |
+          docker stop app
+          docker rm app
