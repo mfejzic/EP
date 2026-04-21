@@ -19,5 +19,5 @@
 #  docker exec -it flask-app tail -n 1 app.log
 
 # open a shell into the container
-#  docker exec -it flask-app bashhhh
+#  docker exec -it flask-app bash
 
