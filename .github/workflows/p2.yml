@@ -1,34 +1,30 @@
-name: DevOps CI Pipeline
+name: P2 CI Pipeline
 
 on:
   push:
-    branches: [ "main" ]                                                              # Trigger on pushes to main branch
+    branches: [ main ]
+    paths:
+      - 'p2/**'
 
-jobs:                                                                              # a job is a collection of steps that run on the same runner
+jobs:
   build-test:
     runs-on: ubuntu-latest
 
     steps:
-      # 1. Checkout repo
-      - name: Checkout code                                                        # action/ checkout is a GitHub Action that checks out your repository under $GITHUB_WORKSPACE, so your workflow can access it
+      - name: Checkout code
         uses: actions/checkout@v4
 
-      # 2. Build Docker image
-      - name: Build Docker image
-        run: docker build -t miniapi .
+      - name: Build Docker image (p2)
+        run: docker build -t miniapi ./p2
 
-      # 3. Run container with env var
       - name: Run container
         run: docker run -d -e API_ENV=dev -p 5000:5000 --name app miniapi
 
-      # 4. Wait for app to start
       - name: Wait for startup
         run: sleep 5
 
-      # 5. Run tests inside container
       - name: Run pytest inside container
         run: docker exec app pytest
 
-      # 6. Show logs (debugging skill)
       - name: Show logs
         run: docker logs app

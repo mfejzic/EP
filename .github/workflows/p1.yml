@@ -1,10 +1,10 @@
-name: EP P1 CI/CD
+name: P1 CI/CD
 
 on:
   push:
     branches: [ main ]
     paths:
-      - "EP/p1/**"
+      - "p1/**"
 
 jobs:
   build-test:
@@ -15,7 +15,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Build Docker image
-        run: docker build -t flask-app EP/p1
+        run: docker build -t flask-app ./p1
 
       - name: Run container
         run: docker run -d -p 5000:5000 --name app flask-app
